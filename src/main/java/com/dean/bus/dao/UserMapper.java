@@ -1,25 +1,26 @@
 package com.dean.bus.dao;
 
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.dean.bus.bean.Person;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 /**
  * @author dean
  */
 @Mapper
+@Component
 public interface UserMapper {
 
 
-//        /**
-//         * 添加操作，返回新增元素的 ID
-//         *
-//         * @param personDO
-//         */
-//        @Insert("insert into person(name,age) values(#{name},#{age})")
-//        @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-//        void insert(PersonDO personDO);
+        /**
+         * 添加操作，返回新增元素的 ID
+         *
+         * @param person
+         */
+        @Insert("insert into person(name,age) values(#{name},#{age})")
+        @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+        int insert(Person person);
 //
 //        /**
 //         * 更新操作
@@ -55,4 +56,7 @@ public interface UserMapper {
          */
         @Select("select phone from user where name=#{name}")
         String selectById(@Param("name") String name);
+
+        @Select("select count(*) from person")
+        int count();
 }

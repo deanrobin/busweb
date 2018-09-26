@@ -1,23 +1,32 @@
 package com.dean.bus.controller;
 
+import com.dean.bus.bean.Person;
 import com.dean.bus.dao.UserMapper;
+import com.dean.bus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("bus/user")
+@RequestMapping("user")
 public class UserController {
-
     @Autowired
-    private UserMapper userMapper;
+    UserService userService;
 
-    @RequestMapping(value = "selectByName", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String save(@RequestParam(value = "name", required = true) String name) {
-        return userMapper.selectById(name);
+    public int save(@RequestParam(value = "name", required = true) String name) {
+        Person person = new Person();
+        person.setName(name);
+        person.setAge(1);
+        return userService.insert(person);
     }
 
 
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    @ResponseBody
+    public int count() {
 
+        return userService.count();
+    }
 }
